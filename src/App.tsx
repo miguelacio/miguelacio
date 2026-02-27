@@ -32,48 +32,48 @@ const config = {
 }
 
 
-  const addFittedText = (ctx: CanvasRenderingContext2D, config: any, text: string, y: number, squash = 1, align = 'left', maxWidth = 740) => {
-    let x: number;
-    if (align == "right") {
-      ctx.textAlign = "right";
-      x = config.rightBoundary;
-    }
-    else if (align == "left") {
-      ctx.textAlign = "left";
-      x = config.leftMargin
-    }
-    else if (align == "center") {
-      ctx.textAlign = "center";
-      x = (config.rightBoundary + config.leftMargin) / 2;
-    }
-    else { x = parseFloat(align) }
-
-    let toDraw = text.split('\n');
-
-    if (toDraw.length > 1) {
-      ctx.textBaseline = "middle";
-    }
-    for (let i = 0; i < toDraw.length; i++) {
-      let mWidth = ctx.measureText('M').width;
-
-      let widthCalc = ctx.measureText(toDraw[i]).width;
-      if (widthCalc * squash >= maxWidth) {
-        widthCalc = maxWidth;
-      } else {
-        widthCalc = widthCalc * squash;
-      }
-
-      ctx.fillText(toDraw[i], x, y + (i * mWidth), widthCalc);
-    }
-
-    // reset to "reasonable" defaults
-    ctx.textBaseline = "top";
-    ctx.textAlign = "left";
+const addFittedText = (ctx: CanvasRenderingContext2D, config: any, text: string, y: number, squash = 1, align = 'left', maxWidth = 740) => {
+  let x: number;
+  if (align == "right") {
+    ctx.textAlign = "right";
+    x = config.rightBoundary;
   }
+  else if (align == "left") {
+    ctx.textAlign = "left";
+    x = config.leftMargin
+  }
+  else if (align == "center") {
+    ctx.textAlign = "center";
+    x = (config.rightBoundary + config.leftMargin) / 2;
+  }
+  else { x = parseFloat(align) }
+
+  let toDraw = text.split('\n');
+
+  if (toDraw.length > 1) {
+    ctx.textBaseline = "middle";
+  }
+  for (let i = 0; i < toDraw.length; i++) {
+    let mWidth = ctx.measureText('M').width;
+
+    let widthCalc = ctx.measureText(toDraw[i]).width;
+    if (widthCalc * squash >= maxWidth) {
+      widthCalc = maxWidth;
+    } else {
+      widthCalc = widthCalc * squash;
+    }
+
+    ctx.fillText(toDraw[i], x, y + (i * mWidth), widthCalc);
+  }
+
+  // reset to "reasonable" defaults
+  ctx.textBaseline = "top";
+  ctx.textAlign = "left";
+}
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
- 
+
   useEffect(() => {
     // Trigger the form submit programmatically
     const form = document.getElementById("autoSubmitForm") as HTMLFormElement;
@@ -140,36 +140,38 @@ function App() {
 
 
   return (
-    <div className="w-full h-full">
-      <div className="md:flex justify-center min-h-screen  text-white ">
+
+      <div className="md:flex justify-center  text-white ">
         <div className="bg-gray-900 p-8 rounded-xl shadow-xl ">
 
           <h1 className="text-2xl font-bold mb-6 text-center">Neon Genesis Evangelion Title Card Generator</h1>
 
           <form id="autoSubmitForm" onSubmit={handleSubmit} className="space-y-6">
 
-            <label className="block text-lg font-semibold mb-2" htmlFor="topText">First Line</label>
+            <label className="block text-lg font-semibold mb-0 text-left" htmlFor="topText">First Line</label>
             <input className='w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="topText" type="text" defaultValue={defaultValues.topText} />
 
-            <label className="block text-lg font-semibold mb-2" htmlFor="midText">Second Line</label>
+            <label className="block text-lg font-semibold mb-0 text-left" htmlFor="midText">Second Line</label>
             <input className='w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="midText" type="text" defaultValue={defaultValues.midText} />
 
-            <label className="block text-lg font-semibold mb-2" htmlFor="botText">Third Line</label>
+            <label className="block text-lg font-semibold mb-0 text-left" htmlFor="botText">Third Line</label>
             <input className='w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="botText" type="text" defaultValue={defaultValues.botText} />
 
-            <label className="block text-lg font-semibold mb-2" htmlFor="epText">"EPISODE"</label>
+            <label className="block text-lg font-semibold mb-0 text-left" htmlFor="epText">"EPISODE"</label>
             <input className='w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="epText" type="text" defaultValue={defaultValues.epText} />
 
-            <label className="block text-lg font-semibold mb-2" htmlFor="titleText">Title Line</label>
-            <textarea className='h-32 w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="titleText"  defaultValue={defaultValues.titleText} />
+            <label className="block text-lg font-semibold mb-0 text-left" htmlFor="titleText">Title Line</label>
+            <textarea className='h-32 w-full p-2 text-gray-300 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none' name="titleText" defaultValue={defaultValues.titleText} />
 
             <button id="generate" type='submit' className='text-white bg-brand box-border border border-transparent font-medium leading-5 rounded-base text-sm px-4 py-2.5' >Generate!</button>
           </form>
 
+        </div >
+        <div className='p-2 flex items-center justify-center'>
+          <canvas id="canvas" ref={canvasRef} width={config.canvasWidth} height={config.canvasHeight} />
         </div>
-          <canvas className="p-2" id="canvas" ref={canvasRef} width={config.canvasWidth} height={config.canvasHeight} />
       </div>
-    </div>
+
   )
 }
 
