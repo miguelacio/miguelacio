@@ -14,15 +14,15 @@ for your personal hatred."`,
 };
 
 const config = {
-  canvasWidth: 1280,
-  canvasHeight: 720,
-  leftMargin: 115,
-  rightBoundary: 1150,
-  smHeadSize: 720 * 0.184,
-  lgHeadSize: 720 * 0.308,
-  epSize: 720 * 0.095,
-  titleSize: 720 * 0.095,
-  maxWidth: 1150 - 115,
+  canvasWidth: 900,
+  canvasHeight: 675,
+  leftMargin: 75,
+  rightBoundary: 815,
+  smHeadSize: 675 * 0.184,
+  lgHeadSize: 675 * 0.308,
+  epSize: 675 * 0.095,
+  titleSize: 675 * 0.095,
+  maxWidth: 815 - 75,
   topSquash: 0.62,
   midSquash: 0.62,
   botSquash: 0.57,
@@ -141,8 +141,8 @@ function App() {
 
   return (
     <div className="w-full h-full">
-      <div className="flex justify-center min-h-screen  text-white ">
-        <div className="bg-gray-900 p-8 rounded-xl shadow-xl w-full max-w-md">
+      <div className="md:flex justify-center min-h-screen  text-white ">
+        <div className="bg-gray-900 p-8 rounded-xl shadow-xl ">
 
           <h1 className="text-2xl font-bold mb-6 text-center">Neon Genesis Evangelion Title Card Generator</h1>
 
@@ -167,7 +167,7 @@ function App() {
           </form>
 
         </div>
-          <canvas className="p-6" id="canvas" ref={canvasRef} width={config.canvasWidth} height={config.canvasHeight} />
+          <canvas className="p-2" id="canvas" ref={canvasRef} width={config.canvasWidth} height={config.canvasHeight} />
       </div>
     </div>
   )
